@@ -27,11 +27,11 @@ const Navbar = () => {
 
     const links =
         <>
-            <NavLink to='/'><li className="flex items-center gap-2">Home</li></NavLink>
-            <NavLink to='/add-transaction'><li className="flex items-center gap-2">Add Transaction</li></NavLink>
-            <NavLink to='/my-transaction'><li className="flex items-center gap-2">My Transaction</li></NavLink>
-            <NavLink to='/reports'><li className="flex items-center gap-2">Reports</li></NavLink>
-            <NavLink to='/my-profile'><li className="flex items-center gap-2">My Profile</li></NavLink>
+            <NavLink to='/'><li>Home</li></NavLink>
+            <NavLink to='/add-transaction'><li> Add Transaction</li></NavLink>
+            <NavLink to='/my-transaction'><li>My Transaction</li></NavLink>
+            <NavLink to='/reports'><li>Reports</li></NavLink>
+            <NavLink to='/my-profile'><li>My Profile</li></NavLink>
         </>
 
     return (
@@ -43,7 +43,7 @@ const Navbar = () => {
                             <Menu />
                         </div>
                         {/* mobile device */}
-                        <ul tabIndex="-1" className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                        <ul tabIndex="-1" className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-start">
                             {links}
                         </ul>
                     </div>
