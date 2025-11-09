@@ -16,6 +16,7 @@ const Navbar = () => {
             <NavLink to='/add-transaction'><li className="flex items-center gap-2">Add Transaction</li></NavLink>
             <NavLink to='/my-transaction'><li className="flex items-center gap-2">My Transaction</li></NavLink>
             <NavLink to='/reports'><li className="flex items-center gap-2">Reports</li></NavLink>
+            <NavLink to='/my-profile'><li className="flex items-center gap-2">My Profile</li></NavLink>
         </>
 
     return (

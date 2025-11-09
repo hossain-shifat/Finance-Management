@@ -46,7 +46,7 @@ const Resister = () => {
         const email = e.target.email.value
         const password = e.target.password.value
 
-        if (passwordError) return
+        if (passwordError.length > 0) return
 
         createUser(email, password)
             .then(result => {
@@ -62,6 +62,7 @@ const Resister = () => {
                     })
             })
             .catch(error => {
+                console.log(error)
                 if (error.code === "auth/email-already-in-use") {
                     toast.error("Email already exist please login")
                 }

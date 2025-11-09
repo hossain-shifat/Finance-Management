@@ -7,6 +7,7 @@ import Reports from '../pages/Reports/Reports'
 import Login from '../pages/Login/Login'
 import Resister from '../pages/Resister/Resister'
 import PrivateRoute from '../components/PriveteRoute/PrivateRoute'
+import MyProfile from '../pages/MyProfile/MyProfile'
 
 
 
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
             {
                 path:'/resister',
                 Component: Resister
+            },
+            {
+                path:'/my-profile',
+                element: <PrivateRoute><MyProfile/></PrivateRoute>
             }
         ]
     }
