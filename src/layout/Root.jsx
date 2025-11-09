@@ -11,7 +11,7 @@ const Root = () => {
             <LeftSideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
             <div className="flex-1 flex flex-col h-screen">
                 <Navbar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-                <div className="flex-1 h-full p-6 xl:p-10 xl:px-16 overflow-y-scroll">
+                <div className="flex-1 h-screen overflow-y-scroll">
                     <Outlet />
                 </div>
             </div>

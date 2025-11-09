@@ -11,10 +11,10 @@
   --color-secondary: #4893FF;
   --color-accent: #0179FE;
 
-  --color-base-content: #475467;   /* Primary text */
-  --color-neutral-content: #344054; /* Secondary text */
+  --color-base-content: #475467;
+  --color-neutral-content: #344054;
 
-  --color-base-100: #EAECF0; /* Background */
+  --color-base-100: #EAECF0;
 
   --rounded-btn: 0.5rem;
   --btn-text-case: capitalize;
@@ -22,14 +22,14 @@
 
 /* dark theme */
 @plugin "daisyui/theme" {
-  name: "dark";
+  name: "black";
 
-  --color-primary: #3B82F6;
-  --color-secondary: #60A5FA;
-  --color-accent: #2563EB;
+  --color-primary: #0179FE;
+  --color-secondary: #4893FF;
+  --color-accent: #0179FE;
 
-  --color-base-content: #E5E7EB;
-  --color-neutral-content: #9CA3AF;
+  --color-base-content: #475467;
+  --color-neutral-content: #344054;
 
   --color-base-100: #1E293B;
 }
@@ -44,5 +44,9 @@ body {
 
   /* for active routes */
 .active{
+    @apply bg-linear-to-r from-[#0179FE] to-[#4893FF] text-white font-bold
+}
+
+.btn-primary{
     @apply bg-linear-to-r from-[#0179FE] to-[#4893FF] text-white font-bold
 }
