@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/AuthContext'
 
 const Navbar = () => {
     const [theme, toggleTheme] = useThemeToggle()
-    const { user } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext)
     const [isProfileOpen, setIsProfileOpen] = useState(false)
     const profileRef = useRef(null)
 
@@ -20,6 +20,10 @@ const Navbar = () => {
         document.addEventListener('mousedown', handleClickOutside)
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
+
+    const handleLogOut = () => {
+        logOut()
+    }
 
     const links =
         <>
@@ -63,17 +67,17 @@ const Navbar = () => {
                         }
                     </button>
 
-                    <div ref={profileRef}>
+                    <div ref={profileRef} className="relative">
                         {
                             user ?
                                 <div>
-                                    <img onClick={() => setIsProfileOpen(!isProfileOpen)} className="w-10 h-10 rounded-full cursor-pointer" src={user.photoURL} alt="" />
+                                    <img onClick={() => setIsProfileOpen(true)} className="w-10 h-10 rounded-full cursor-pointer" src={user.photoURL} alt="" />
                                     {
                                         isProfileOpen && (
                                             <div className="absolute right-2 mt-3 w-75 bg-base-100 shadow-xl rounded-lg p-4 z-10 border border-gray-100 dark:border-gray-100">
                                                 <div>
                                                     <div className="flex justify-end">
-                                                        <X size={18} className="cursor-pointer" />
+                                                        <X onClick={() => setIsProfileOpen(false)} size={18} className="cursor-pointer" />
                                                     </div>
                                                     <div className="space-y-3">
                                                         <div>
@@ -81,7 +85,7 @@ const Navbar = () => {
                                                             <p>Email: {user.email}</p>
                                                         </div>
                                                         <div className="flex justify-end">
-                                                            <button className="btn btn-outline btn-error">Logout</button>
+                                                            <button onClick={handleLogOut} className="btn btn-outline btn-error">Logout</button>
                                                         </div>
                                                     </div>
                                                 </div>
