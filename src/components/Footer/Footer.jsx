@@ -5,8 +5,7 @@ const Footer = () => {
     return (
         <footer className="footer sm:footer-horizontal bg-base-300 text-base-content p-10">
             <nav>
-                <Link to='/' className="font-bold text-xl cursor-pointer">Smart<span className="gradient-text">Deals</span></Link>
-                <p className="text-gray-100 max-w-[300px]">Your trusted marketplace for authentic local products. Discover the best deals from across Bangladesh.</p>
+                <Link to='/' className="font-bold text-2xl">Fin<span className="text-primary">Ease</span></Link>
             </nav>
             <nav>
                 <h6 className="footer-title">Services</h6>

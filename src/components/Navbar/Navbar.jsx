@@ -1,6 +1,6 @@
-import { BarChart, CircleDollarSign, CreditCard, Hamburger, Home, LayoutDashboard, Menu, MoonIcon, PanelLeft, Search, SearchIcon, SunIcon } from 'lucide-react'
+import { Menu, MoonIcon, SunIcon } from 'lucide-react'
 import React from 'react'
-import { NavLink } from 'react-router'
+import { Link, NavLink } from 'react-router'
 import { useThemeToggle } from '../../hook/Theme/ThemeToggle'
 
 
@@ -16,19 +16,19 @@ const Navbar = () => {
         </>
 
     return (
-        <div className="bg-white border-b border-base-200 shrink-0 dark:bg-base-100">
+        <div className="bg-white border-b md:px-4 border-base-200 shrink-0 dark:bg-base-100">
             <div className="navbar bg-base-100 shadow-sm">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                            <Menu/>
+                            <Menu />
                         </div>
                         <ul tabIndex="-1" className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                             {links}
                         </ul>
                     </div>
                     <div>
-                        <h1 className="font-bold text-2xl">Fin<span className="text-primary">Ease</span></h1>
+                        <Link to='/' className="font-bold text-2xl">Fin<span className="text-primary">Ease</span></Link>
                     </div>
                 </div>
 
@@ -38,7 +38,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end flex items-center gap-2">
-                    <button onClick={toggleTheme} className="size-9 flex items-center justify-center bg-base-100 shadow rounded-lg transition hover:scale-105 active:scale-95 cursor-pointer">
+                    <button onClick={toggleTheme} className="size-9 p-2 flex items-center justify-center bg-base-100 shadow rounded-lg transition hover:scale-105 active:scale-95 cursor-pointer">
                         {
                             theme === "light"
                                 ? (<MoonIcon className=" text-black dark:text-gray-200" size={23} stroke='black' />)
