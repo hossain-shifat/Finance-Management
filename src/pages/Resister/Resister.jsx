@@ -77,7 +77,7 @@ const Resister = () => {
 
     return (
         <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}>
-            <div className="flex justify-center items-center min-h-screen text-[#333] bg-base-200 -mt-5 select-none">
+            <div className="flex justify-center items-center min-h-screen text-[#333] bg-base-200 dark:bg-base-100 -mt-5 select-none">
                 <div className="mx-4">
                     <div className="w-full max-w-[450px] p-7 border border-gray-100 rounded-xl shadow-sm bg-base-100 dark:bg-base-300 dark:border-base-200 text-base-content">
                         <form onSubmit={handleSingUp}>

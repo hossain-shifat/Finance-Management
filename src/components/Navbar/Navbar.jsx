@@ -1,11 +1,14 @@
 import { Menu, MoonIcon, SunIcon } from 'lucide-react'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, NavLink } from 'react-router'
 import { useThemeToggle } from '../../hook/Theme/ThemeToggle'
+import { AuthContext } from '../../context/AuthContext'
 
 
 const Navbar = () => {
     const [theme, toggleTheme] = useThemeToggle()
+    const { user } = useContext(AuthContext)
+    console.log(user)
 
     const links =
         <>
@@ -23,6 +26,7 @@ const Navbar = () => {
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                             <Menu />
                         </div>
+                        {/* mobile device */}
                         <ul tabIndex="-1" className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                             {links}
                         </ul>
@@ -32,6 +36,7 @@ const Navbar = () => {
                     </div>
                 </div>
 
+                {/* large Screen view */}
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 gap-4">
                         {links}
@@ -46,8 +51,20 @@ const Navbar = () => {
                         }
                     </button>
 
-                    <Link to='/login' className="btn btn-primary">Login</Link>
-                    <Link to='/resister' className="btn btn-primary">Register</Link>
+                    <div>
+                        {
+                            user ?
+                                <div>
+                                    <img className="w-10 h-10 rounded-full cursor-pointer" src={user.photoURL} alt="" />
+                                </div>
+                                :
+                                <div className="flex gap-2">
+                                    <Link to='/login' className="btn btn-primary">Login</Link>
+                                    <Link to='/resister' className="btn btn-primary">Register</Link>
+                                </div>
+                        }
+                    </div>
+
                 </div>
             </div>
         </div>

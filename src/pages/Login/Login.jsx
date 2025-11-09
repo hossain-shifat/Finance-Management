@@ -8,7 +8,7 @@ import { motion } from 'framer-motion'
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
-    const { singInUser, setUser, googleSingIn } = useContext(AuthContext)
+    const { signInUser, setUser, googleSingIn } = useContext(AuthContext)
     const emailRef = useRef()
 
     const location = useLocation()
@@ -19,7 +19,7 @@ const Login = () => {
         e.preventDefault()
         const email = e.target.email.value
         const password = e.target.password.value
-        singInUser(email, password)
+        signInUser(email, password)
             .then(result => {
                 setUser(result.user)
                 toast.success('Login Successfull')

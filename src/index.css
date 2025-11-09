@@ -50,3 +50,5 @@ body {
 .btn-primary{
     @apply bg-linear-to-r from-[#0179FE] to-[#4893FF] text-white font-bold
 }
+
+

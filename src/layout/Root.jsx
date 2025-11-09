@@ -13,7 +13,15 @@ const Root = () => {
                 <Outlet />
             </div>
             <Footer />
-            <ToastContainer />
+            <ToastContainer
+                toastStyle={{
+                    minWidth: '200px',
+                    maxWidth: '300px',
+                    width: '300px',
+                }}
+                style={{
+                    top: '20px',
+                }} />
         </div>
     )
 }
