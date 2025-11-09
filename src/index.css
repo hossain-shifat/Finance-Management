@@ -44,7 +44,7 @@ body {
 
   /* for active routes */
 .active{
-    @apply bg-linear-to-r from-[#0179FE] to-[#4893FF] text-white font-bold
+    @apply text-primary border-b-2;
 }
 
 .btn-primary{

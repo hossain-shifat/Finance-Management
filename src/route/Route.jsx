@@ -1,9 +1,10 @@
 import { createBrowserRouter } from 'react-router'
 import Root from '../layout/Root'
 import Home from '../pages/Home/Home'
-import Dashboard from '../pages/Payments/Dashboard'
-import MyBankCards from '../pages/MyBankCards/MyBankCards'
-import Transactions from '../pages/Transactions/Transactions'
+import AddTransaction from '../pages/AddTransaction/AddTransaction'
+import MyTransaction from '../pages/MyTransaction/MyTransaction'
+import Reports from '../pages/Reports/Reports'
+
 
 
 export const router = createBrowserRouter([
@@ -17,16 +18,16 @@ export const router = createBrowserRouter([
                 Component: Home
             },
             {
-                path: '/Dashboard',
-                Component: Dashboard
+                path: '/add-transaction',
+                Component: AddTransaction
             },
             {
-                path: '/MyBankCards',
-                Component: MyBankCards
+                path: '/my-transaction',
+                Component: MyTransaction
             },
             {
-                path: '/Transaction',
-                Component: Transactions
+                path: '/reports',
+                Component: Reports
             }
         ]
     }
