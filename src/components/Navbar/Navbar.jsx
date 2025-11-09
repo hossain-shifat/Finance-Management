@@ -1,5 +1,5 @@
-import { Menu, MoonIcon, SunIcon } from 'lucide-react'
-import React, { useContext } from 'react'
+import { Menu, MoonIcon, SunIcon, X } from 'lucide-react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router'
 import { useThemeToggle } from '../../hook/Theme/ThemeToggle'
 import { AuthContext } from '../../context/AuthContext'
@@ -8,7 +8,18 @@ import { AuthContext } from '../../context/AuthContext'
 const Navbar = () => {
     const [theme, toggleTheme] = useThemeToggle()
     const { user } = useContext(AuthContext)
-    console.log(user)
+    const [isProfileOpen, setIsProfileOpen] = useState(false)
+    const profileRef = useRef(null)
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (profileRef.current && !profileRef.current.contains(e.target)) {
+                setIsProfileOpen(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
 
     const links =
         <>
@@ -52,11 +63,31 @@ const Navbar = () => {
                         }
                     </button>
 
-                    <div>
+                    <div ref={profileRef}>
                         {
                             user ?
                                 <div>
-                                    <img className="w-10 h-10 rounded-full cursor-pointer" src={user.photoURL} alt="" />
+                                    <img onClick={() => setIsProfileOpen(!isProfileOpen)} className="w-10 h-10 rounded-full cursor-pointer" src={user.photoURL} alt="" />
+                                    {
+                                        isProfileOpen && (
+                                            <div className="absolute right-2 mt-3 w-75 bg-base-100 shadow-xl rounded-lg p-4 z-10 border border-gray-100 dark:border-gray-100">
+                                                <div>
+                                                    <div className="flex justify-end">
+                                                        <X size={18} className="cursor-pointer" />
+                                                    </div>
+                                                    <div className="space-y-3">
+                                                        <div>
+                                                            <p>Name: {user.displayName}</p>
+                                                            <p>Email: {user.email}</p>
+                                                        </div>
+                                                        <div className="flex justify-end">
+                                                            <button className="btn btn-outline btn-error">Logout</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
                                 </div>
                                 :
                                 <div className="flex gap-2">
