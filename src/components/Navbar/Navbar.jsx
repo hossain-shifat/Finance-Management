@@ -11,7 +11,7 @@ const Navbar = ({ setIsSidebarOpen }) => {
             <div className="flex items-center justify-between max-w-6xl mx-auto">
 
                 <div className="flex items-center gap-4 min-w-0 flex-1">
-                    <button onClick={() => setIsSidebarOpen((prev) => !prev)} className="sm:hidden p-2 rounded-lg transition-colors text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-800" >
+                    <button onClick={() => setIsSidebarOpen((prev) => !prev)} className="sm:hidden p-2 rounded-lg transition-colors cursor-pointer text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-800" >
                         <PanelLeft size={25} className={`${theme === 'light' ? 'text-black' : 'text-white'}`} />
                     </button>
                     <div className="sm:hidden">
