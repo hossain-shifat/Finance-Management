@@ -14,22 +14,29 @@ const Resister = () => {
     const from = location.state?.from?.pathname || '/'
 
     const passwordValidation = (password) => {
-        const pattern = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/
-        if (!pattern.test(password)) {
-            return 'Password must be at least 6 characters, contain at least one uppercase and one lowercase letter'
+        const error = []
+
+        if (password.length < 6) {
+            error.push("At least 6 characters")
         }
-        return ''
+        if (!/[A-Z]/.test(password)) {
+            error.push("At least one uppercase letter")
+        }
+        if (!/[a-z]/.test(password)) {
+            error.push("At least one lowercase letter")
+        }
+        return error
     }
 
     const handlePasswordOnChange = (e) => {
         const pass = e.target.value
         setPassword(pass)
         if (!pass) {
-            setPassowrdError('')
+            setPassowrdError([])
             return
         }
-        const error = passwordValidation(pass)
-        setPassowrdError(error)
+        const errorList = passwordValidation(pass)
+        setPassowrdError(errorList)
     }
 
     const handleSingUp = (e) => {
@@ -68,9 +75,7 @@ const Resister = () => {
                 navigate(from, { replace: true })
             })
             .catch(error => {
-                if (error.code === 'auth/invalid-credential') {
-                    toast.error('Ivalid email or password')
-                }
+                toast.error(error.message || 'Login Faild')
             })
     }
 
@@ -89,7 +94,15 @@ const Resister = () => {
                                 <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" type={showPassword ? 'text' : 'password'} onChange={handlePasswordOnChange} name='password' value={password} placeholder='Password' />
                                 <span onClick={() => setShowPassword(!showPassword)} className="absolute cursor-pointer top-5 right-5">{showPassword ? <EyeClosed /> : <Eye />}</span>
                             </div>
-                            {passwordError && (<p className="text-red-600 select-none">{passwordError}</p>)}
+                            {passwordError &&
+                                (
+                                    <ul className="text-red-600 list-disc list-inside select-none">
+                                        {passwordError.map((err, index) => (
+                                            <li key={index}>{err}</li>
+                                        ))}
+                                    </ul>
+
+                                )}
                             <button className="btn btn-primary font-bold text-white w-full mt-5 border-none outline-none">Sing Up</button>
                             <p className="mt-2">Already Have an Account? <Link to='/login' className="underline text-blue-600">Login</Link></p>
                         </form>

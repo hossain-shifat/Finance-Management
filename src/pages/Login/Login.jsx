@@ -27,9 +27,7 @@ const Login = () => {
                 e.target.reset()
             })
             .catch(error => {
-                if (error.code === 'auth/invalid-credential') {
-                    toast.error('Invalid email or password')
-                }
+                toast.error(error.message || 'Login Faild')
             })
     }
 
