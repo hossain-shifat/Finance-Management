@@ -8,6 +8,7 @@ import Login from '../pages/Login/Login'
 import Resister from '../pages/Resister/Resister'
 import PrivateRoute from '../components/PriveteRoute/PrivateRoute'
 import MyProfile from '../pages/MyProfile/MyProfile'
+import UpdateProfile from '../pages/UpdateProfile/UpdateProfile'
 
 
 
@@ -44,7 +45,11 @@ export const router = createBrowserRouter([
             {
                 path:'/my-profile',
                 element: <PrivateRoute><MyProfile/></PrivateRoute>
-            }
+            },
+            {
+                path:'/update-profile',
+                element: <PrivateRoute><UpdateProfile/></PrivateRoute>
+            },
         ]
     }
 ])
