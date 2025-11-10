@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Pie } from 'react-chartjs-2'
-import { number } from 'motion'
+import { motion } from 'motion/react'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -27,7 +27,14 @@ const Overview = () => {
         .reduce((acc, t) => {
             acc[t.category] = (acc[t.category] || 0) + Number(t.amount)
             return acc
-        },{})
+        }, {})
+
+    const expenseByCategory = overview
+        .filter(t => t.type === 'expense')
+        .reduce((acc, t) => {
+            acc[t.category] = (acc[t.category] || 0) + Number(t.amount)
+            return acc
+        }, {})
 
     const totalIncome = overview
         .filter(t => t.type === "income")
@@ -38,9 +45,6 @@ const Overview = () => {
         .reduce((sum, t) => sum + Number(t.amount), 0);
 
     const totalBalance = totalIncome - totalExpense;
-
-    console.log(totalIncome, totalExpense, totalBalance)
-
 
     const balanceData = {
         labels: ['Balance', 'Spent'],
@@ -67,11 +71,13 @@ const Overview = () => {
     }
 
     const expenseData = {
-        labels: ['Expense', 'Remaining'],
+        labels: Object.keys(expenseByCategory),
         datasets: [
             {
-                data: [totalExpense, totalIncome - totalExpense > 0 ? totalIncome - totalExpense : 0],
-                backgroundColor: ['#f87171', '#fee2e2'],
+                data: Object.values(expenseByCategory),
+                backgroundColor: [
+                    '#f87171', '#ef4444', '#b91c1c', '#fee2e2', '#fecaca'
+                ],
                 borderWidth: 1
             }
         ]
@@ -82,35 +88,43 @@ const Overview = () => {
             <div className="my-10">
                 <h1 className="font-bold text-2xl">Overview</h1>
             </div>
-            <div className="grid md:grid-cols-3 gap-4 rounded-xl">
-                <div className="border-2 flex flex-col md:flex-row justify-between items-center text-center p-4">
-                    <div className="w-60 max-w-full">
-                        <Pie data={balanceData} />
-                    </div>
-                    <div>
-                        <h1 className="font-semibold text-lg">Total Balance</h1>
-                        <p>{totalBalance}</p>
-                    </div>
+            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}>
+                <div className="grid md:grid-cols-3 gap-4 rounded-xl">
+                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}  >
+                        <div className="grid justify-center gap-4 items-center text-center p-4 border border-base-200 shadow-xl rounded-xl bg-base-200 dark:bg-base-200">
+                            <div className="w-60 max-w-full">
+                                <Pie data={balanceData} />
+                            </div>
+                            <div className="flex justify-center items-center gap-2">
+                                <h1 className="font-semibold text-lg">Current Balance</h1>
+                                <p>{totalBalance}</p>
+                            </div>
+                        </div>
+                    </motion.div>
+                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}  >
+                        <div className="grid justify-center gap-4 items-center text-center p-4 border border-base-200 shadow-xl rounded-xl bg-base-200 dark:bg-base-200">
+                            <div className="w-60 max-w-full">
+                                <Pie data={incomeData} />
+                            </div>
+                            <div className="flex justify-center items-center gap-2">
+                                <h1 className="font-semibold text-lg">Total Income</h1>
+                                <p>{totalIncome}</p>
+                            </div>
+                        </div>
+                    </motion.div>
+                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}  >
+                        <div className="grid justify-center gap-4 items-center text-center p-4 border border-base-200 shadow-xl rounded-xl bg-base-200 dark:bg-base-200">
+                            <div className="w-60 max-w-full">
+                                <Pie data={expenseData} />
+                            </div>
+                            <div className="flex justify-center items-center gap-2">
+                                <h1 className="font-semibold text-lg">Total Expense: </h1>
+                                <p>{totalExpense}</p>
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
-                <div className="border-2 flex flex-col md:flex-row justify-between items-center text-center p-4">
-                    <div className="w-60 max-w-full">
-                        <Pie data={incomeData} />
-                    </div>
-                    <div>
-                        <h1 className="font-semibold text-lg">Total Income</h1>
-                        <p>{totalIncome}</p>
-                    </div>
-                </div>
-                <div className="border-2 flex flex-col md:flex-row justify-between items-center text-center p-4">
-                    <div className="w-60 max-w-full">
-                        <Pie data={expenseData} />
-                    </div>
-                    <div>
-                        <h1 className="font-semibold text-lg">Total Expense</h1>
-                        <p>{totalExpense}</p>
-                    </div>
-                </div>
-            </div>
+            </motion.div>
         </div>
     )
 }
