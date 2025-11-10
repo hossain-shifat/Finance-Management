@@ -1,6 +1,7 @@
 import { motion } from 'motion/react'
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
+import { toast } from 'react-toastify'
 
 
 const AddTransaction = () => {
@@ -14,13 +15,55 @@ const AddTransaction = () => {
         expense: ["Food", "Transport", "Shopping", "Bills", "Health", "Entertainment", "Other Expense",
         ],
     };
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const type = e.target.type.value
+        const amount = e.target.amount.value
+        const description = e.target.description.value
+        const userEmail = e.target.email.value
+        const userName = e.target.name.value
+        const now = new Date();
+        const date = now.toLocaleDateString();
+        const time = now.toLocaleTimeString();
+
+        const newTransaction = {
+            type: type,
+            category: category,
+            amount: amount,
+            description: description,
+            date: date,
+            time: time,
+            user_email: userEmail,
+            user_name: userName
+        }
+
+        fetch('http://localhost:3000/transaction', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newTransaction)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.insertedId) {
+                    e.target.reset()
+                    setCategory('')
+                    toast.success('Transaction Added')
+                }
+            })
+    }
+
     return (
         <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}>
-            <div className="flex justify-center items-center min-h-screen text-[#333] bg-base-200 dark:bg-base-100 -mt-5 select-none">
+            <div className="flex justify-center items-center min-h-screen text-[#333] bg-base-200 dark:bg-base-100 my-10 select-none">
                 <div className="mx-4">
                     <div className="w-full max-w-[450px] p-7 border border-gray-100 rounded-xl shadow-sm bg-base-100 dark:bg-base-300 dark:border-base-200 text-base-content">
                         <h1 className="text-2xl font-bold text-center mb-5">Add Transaction</h1>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="space-y-3">
                                 <div className="space-y-2 bg-base-200 w-full p-3 py-4 rounded-sm">
                                     <div>
@@ -60,12 +103,12 @@ const AddTransaction = () => {
                                 </div>
                             </div>
                             <div>
-                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" type="tel" placeholder="Amount" pattern="[0-9]*" title="" />
-                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" readOnly defaultValue={user.displayName} type="email" name='email' placeholder='Email' />
-                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" readOnly defaultValue={user.email} type="text" name='name' placeholder='Name' />
+                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" type="tel" placeholder="Amount" pattern="[0-9]*" name="amount" />
+                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" readOnly defaultValue={user.email} type="email" name='email' placeholder='Email' />
+                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" readOnly defaultValue={user.displayName} type="text" name='name' placeholder='Name' />
                             </div>
                             <div>
-                                <textarea cols="20" rows="4" className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" placeholder='Description'></textarea>
+                                <textarea cols="20" rows="4" className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" placeholder='Description' name='description'></textarea>
                             </div>
                             <div className="w-full">
                                 <button className="btn btn-primary w-full my-4">Add Transaction</button>
