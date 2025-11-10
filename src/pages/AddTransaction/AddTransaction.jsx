@@ -39,7 +39,7 @@ const AddTransaction = () => {
             user_name: userName
         }
 
-        fetch('http://localhost:3000/transaction', {
+        fetch('http://localhost:3000/add-transaction', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

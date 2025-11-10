@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-import { Pie } from 'react-chartjs-2'
 import { motion } from 'motion/react'
-
-ChartJS.register(ArcElement, Tooltip, Legend)
+import masterCardLogo from '../../assets/mastercard_icon.png'
+import { ArrowRight, TrendingDown, TrendingUp } from 'lucide-react'
+import { Link } from 'react-router'
 
 const Overview = () => {
 
@@ -22,20 +21,6 @@ const Overview = () => {
         }
     }, [user])
 
-    const incomeByCategory = overview
-        .filter(t => t.type === 'income')
-        .reduce((acc, t) => {
-            acc[t.category] = (acc[t.category] || 0) + Number(t.amount)
-            return acc
-        }, {})
-
-    const expenseByCategory = overview
-        .filter(t => t.type === 'expense')
-        .reduce((acc, t) => {
-            acc[t.category] = (acc[t.category] || 0) + Number(t.amount)
-            return acc
-        }, {})
-
     const totalIncome = overview
         .filter(t => t.type === "income")
         .reduce((sum, t) => sum + Number(t.amount), 0);
@@ -46,43 +31,6 @@ const Overview = () => {
 
     const totalBalance = totalIncome - totalExpense;
 
-    const balanceData = {
-        labels: ['Balance', 'Spent'],
-        datasets: [
-            {
-                data: [totalBalance > 0 ? totalBalance : 0, totalExpense],
-                backgroundColor: ['#3b82f6', '#bfdbfe'],
-                borderWidth: 1
-            }
-        ]
-    }
-
-    const incomeData = {
-        labels: Object.keys(incomeByCategory),
-        datasets: [
-            {
-                data: Object.values(incomeByCategory),
-                backgroundColor: [
-                    '#4ade80', '#22c55e', '#16a34a', '#a7f3d0', '#bbf7d0'
-                ],
-                borderWidth: 1
-            }
-        ]
-    }
-
-    const expenseData = {
-        labels: Object.keys(expenseByCategory),
-        datasets: [
-            {
-                data: Object.values(expenseByCategory),
-                backgroundColor: [
-                    '#f87171', '#ef4444', '#b91c1c', '#fee2e2', '#fecaca'
-                ],
-                borderWidth: 1
-            }
-        ]
-    }
-
     return (
         <div className="my-10 px-4">
             <div className="my-10">
@@ -90,36 +38,82 @@ const Overview = () => {
             </div>
             <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}>
                 <div className="grid md:grid-cols-3 gap-4 rounded-xl">
-                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}  >
-                        <div className="grid justify-center gap-4 items-center text-center p-4 border border-base-200 shadow-xl rounded-xl bg-base-200 dark:bg-base-200">
-                            <div className="w-60 max-w-full">
-                                <Pie data={balanceData} />
+                    <motion.div whileHover={{ scale: 1.1 }}>
+                        <div className="p-4 border border-base-100 shadow-xl rounded-xl bg-base-100">
+                            <div className="pb-5">
+                                <h1 className="font-semibold text-lg">Total Balance</h1>
                             </div>
-                            <div className="flex justify-center items-center gap-2">
-                                <h1 className="font-semibold text-lg">Current Balance</h1>
-                                <p>{totalBalance}</p>
+                            <div>
+                                <div className="flex justify-between items-center">
+                                    <h1 className="font-bold text-2xl">${totalBalance}</h1>
+                                    <p>All Accounts</p>
+                                </div>
+                                <div className="flex justify-between border border-[#299D91] shadow-xl my-5 rounded-xl bg-[#299D91] p-4">
+                                    <div className="space-y-2 *:text-[#FFFFFF]">
+                                        <p>Account Type</p>
+                                        <h1 className="font-bold text-xl">Credit Card</h1>
+                                        <p>**** **** **** 2598</p>
+                                    </div>
+                                    <div className="flex flex-col justify-between">
+                                        <div>
+                                            <img src={masterCardLogo} alt="" />
+                                        </div>
+                                        <div className="font-bold text-lg text-[#FFFFFF]">
+                                            <h1>${totalBalance}</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* <motion.div whileTap={{ scale: 0.9 }} className="flex justify-end px-1 cursor-pointer">
+                                    <Link><ArrowRight /></Link>
+                                </motion.div> */}
                             </div>
                         </div>
                     </motion.div>
-                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}  >
-                        <div className="grid justify-center gap-4 items-center text-center p-4 border border-base-200 shadow-xl rounded-xl bg-base-200 dark:bg-base-200">
-                            <div className="w-60 max-w-full">
-                                <Pie data={incomeData} />
-                            </div>
-                            <div className="flex justify-center items-center gap-2">
+                    <motion.div whileHover={{ scale: 1.1 }}>
+                        <div className="p-4 border border-base-100 shadow-xl rounded-xl bg-base-100">
+                            <div className="pb-5">
                                 <h1 className="font-semibold text-lg">Total Income</h1>
-                                <p>{totalIncome}</p>
+                            </div>
+                            <div>
+                                <div className="flex justify-between items-center">
+                                    <h1 className="font-bold text-2xl">${totalIncome}</h1>
+                                    <p>All Income Types</p>
+                                </div>
+                                <div className="flex justify-between h-31 border border-blue-900 shadow-xl my-5 rounded-xl bg-blue-900 p-4">
+                                    <div className="space-y-2 *:text-[#FFFFFF]">
+                                        <p>This Month Income</p>
+                                        <h1 className="font-bold text-xl">${totalIncome}</h1>
+                                    </div>
+                                    <div className="flex flex-col justify-between">
+                                        <div>
+                                            <TrendingUp stroke='white'/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
-                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}  >
-                        <div className="grid justify-center gap-4 items-center text-center p-4 border border-base-200 shadow-xl rounded-xl bg-base-200 dark:bg-base-200">
-                            <div className="w-60 max-w-full">
-                                <Pie data={expenseData} />
+                    <motion.div whileHover={{ scale: 1.1 }}>
+                        <div className="p-4 border border-base-100 shadow-xl rounded-xl bg-base-100">
+                            <div className="pb-5">
+                                <h1 className="font-semibold text-lg">Total Expense</h1>
                             </div>
-                            <div className="flex justify-center items-center gap-2">
-                                <h1 className="font-semibold text-lg">Total Expense: </h1>
-                                <p>{totalExpense}</p>
+                            <div>
+                                <div className="flex justify-between items-center">
+                                    <h1 className="font-bold text-2xl">${totalExpense}</h1>
+                                    <p>All Expense Types</p>
+                                </div>
+                                <div className="flex justify-between h-31 border border-base-100 bg-base-300 shadow-xl my-5 rounded-xl p-4">
+                                    <div className="space-y-2 text-base-content">
+                                        <p>This Month Expense</p>
+                                        <h1 className="font-bold text-xl">${totalExpense}</h1>
+                                    </div>
+                                    <div className="flex flex-col justify-between">
+                                        <div className="text-base-content">
+                                            <TrendingDown />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
