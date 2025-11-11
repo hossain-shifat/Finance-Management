@@ -18,6 +18,8 @@ const Root = () => {
                     minWidth: '200px',
                     maxWidth: '300px',
                     width: '300px',
+                    backgroundColor: '#1e293b',
+                    color: '#f8fafc',
                 }}
                 style={{
                     top: '20px',

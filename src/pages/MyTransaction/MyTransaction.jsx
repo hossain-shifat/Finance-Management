@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 
 const MyTransaction = () => {
 
-    const { user } = useContext(AuthContext)
+    const { user, loading } = useContext(AuthContext)
     const [transactions, setTransactions] = useState([])
     const [type, setType] = useState('')
     const [category, setCategory] = useState('');
@@ -23,7 +23,11 @@ const MyTransaction = () => {
 
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:3000/my-transaction?email=${user.email}`)
+            fetch(`http://localhost:3000/my-transaction?email=${user.email}`, {
+                headers: {
+                    authorization: `Bearer ${user.accessToken}`
+                }
+            })
                 .then(res => res.json())
                 .then(data => {
                     setTransactions(data)
@@ -52,7 +56,8 @@ const MyTransaction = () => {
         fetch(`http://localhost:3000/my-transaction/${selectedId}`, {
             method: "PATCH",
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${user.accessToken}`
             },
             body: JSON.stringify(updateTransaction)
         })
@@ -69,6 +74,10 @@ const MyTransaction = () => {
             })
     }
 
+    if (loading) {
+        return <div className="flex justify-center items-center h-screen"><span className="loading loading-spinner text-primary"></span></div>;
+    }
+
     const handleDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -83,7 +92,10 @@ const MyTransaction = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch(`http://localhost:3000/my-transaction/${id}`, {
-                    method: "DELETE"
+                    method: "DELETE",
+                    headers: {
+                        authorization: `Bearer ${user.accessToken}`
+                    }
                 })
                     .then(res => res.json())
                     .then(data => {
@@ -91,7 +103,9 @@ const MyTransaction = () => {
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Your file has been deleted.",
-                                icon: "success"
+                                icon: "success",
+                                background: bgColor,
+                                color: textColor
                             });
                             const remainingTransaction = transactions.filter(transaction => transaction._id !== id)
                             setTransactions(remainingTransaction)
@@ -103,8 +117,9 @@ const MyTransaction = () => {
 
     return (
         <div className="px-4 my-10">
-            <h1 className="my-10 font-bold text-2xl">My Transaction</h1>
-
+            <div>
+                <h1 className="my-10 font-bold text-2xl">My Transaction</h1>
+            </div>
             <div className="overflow-x-auto">
                 <table className="table w-auto mx-auto">
                     <thead>
@@ -114,6 +129,7 @@ const MyTransaction = () => {
                             <th>Categoty</th>
                             <th>Amount</th>
                             <th>Date</th>
+                            <th>Time</th>
                             <th>Transaction Id</th>
                             <th>Action</th>
                         </tr>
@@ -127,6 +143,7 @@ const MyTransaction = () => {
                                     <td>{transaction.category}</td>
                                     <td className={`${transaction.type === 'income' ? 'text-green-500' : 'text-red-500'}`}>{transaction.type === 'income' ? `+$${transaction.amount}` : `-$${transaction.amount}`}</td>
                                     <td>{transaction.date}</td>
+                                    <td>{transaction.time}</td>
                                     <td>{transaction._id}</td>
                                     <td>
                                         <div className="flex gap-2">
@@ -145,7 +162,7 @@ const MyTransaction = () => {
                 {/* <button className="btn" onClick={() => document.getElementById('my_modal_5').showModal()}>open modal</button> */}
 
                 <dialog ref={updateRef} id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                    {/* <div className="flex justify-center items-center min-h-screen text-[#333] bg-base-200 dark:bg-base-100 select-none"> */}
+                    {/* <div className="flex justify-center items-center min-h-screen text-base-content bg-base-200 dark:bg-base-100 select-none"> */}
                     <div className="mx-4">
                         <div className="w-full max-w-[450px] p-7 border border-gray-100 rounded-xl shadow-sm bg-base-100 dark:bg-base-300 dark:border-base-200 text-base-content">
                             <h1 className="text-2xl font-bold text-center mb-5">Update</h1>
@@ -169,7 +186,8 @@ const MyTransaction = () => {
                                     <div className="w-full">
                                         <input
                                             type="text"
-                                            className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200"
+                                            className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200"
+                                            required
                                             placeholder={
                                                 type
                                                     ? "Select or type category"
@@ -189,10 +207,10 @@ const MyTransaction = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" type="tel" placeholder="Amount" pattern="[0-9]*" name="amount" />
+                                    <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" type="tel" required placeholder="Amount" pattern="[0-9]*" name="amount" />
                                 </div>
                                 <div>
-                                    <textarea cols="20" rows="4" className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" placeholder='Description' name='description'></textarea>
+                                    <textarea cols="20" rows="4" className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" required placeholder='Description' name='description'></textarea>
                                 </div>
                                 <div className=" flex gap-4 justify-end">
                                     <button onClick={() => updateRef.current.close()} type='button' className="btn btn-outline my-4">Close</button>

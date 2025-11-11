@@ -33,7 +33,7 @@ const UpdateProfile = () => {
 
     return (
         <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}>
-            <div className="flex justify-center items-center min-h-screen text-[#333] bg-base-200 dark:bg-base-100 -mt-5 select-none">
+            <div className="flex justify-center items-center min-h-screen text-base-content bg-base-200 dark:bg-base-100 -mt-5 select-none">
                 <div className="mx-4">
                     <div className="w-full max-w-[450px] p-7 border border-gray-100 rounded-xl shadow-sm bg-base-100 dark:bg-base-200 dark:border-base-200 text-base-content">
                         <form onSubmit={handleUpdate}>
@@ -43,8 +43,8 @@ const UpdateProfile = () => {
                             <div>
                                 <h1 className="text-2xl font-bold text-center mb-5">Update Profile</h1>
                             </div>
-                            <input onChange={(e) => setName(e.target.value)} className="w-full p-3 rounded bg-[#eee] border border-gray-100 outline-none text-[1rem] text-[#333] my-2" type="text" name='name' value={name} placeholder='Name' />
-                            <input onChange={(e) => setPhoto(e.target.value)} className="w-full p-3 rounded bg-[#eee] border border-gray-100 outline-none text-[1rem] text-[#333] my-2" type="text" name='photo' value={photo} placeholder='Photo URL' />
+                            <input onChange={(e) => setName(e.target.value)} className="w-full p-3 rounded bg-[#eee] border border-gray-100 outline-none text-[1rem] text-base-content my-2" type="text" name='name' value={name} placeholder='Name' />
+                            <input onChange={(e) => setPhoto(e.target.value)} className="w-full p-3 rounded bg-[#eee] border border-gray-100 outline-none text-[1rem] text-base-content my-2" type="text" name='photo' value={photo} placeholder='Photo URL' />
                             <button className="btn btn-primary font-bold text-white w-full mt-5 border-none outline-none">Confirm</button>
                         </form>
                     </div>

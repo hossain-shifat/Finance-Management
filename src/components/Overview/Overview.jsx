@@ -7,12 +7,16 @@ import { Link } from 'react-router'
 
 const Overview = () => {
 
+    const { user,loading } = useContext(AuthContext)
     const [overview, setOverview] = useState([])
-    const { user } = useContext(AuthContext)
 
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:3000/overview?email=${user.email}`)
+            fetch(`http://localhost:3000/overview?email=${user.email}`,{
+                headers: {
+                    authorization: `Bearer ${user.accessToken}`
+                }
+            })
                 .then(res => res.json())
                 .then(data => {
                     console.log(data)
@@ -30,6 +34,10 @@ const Overview = () => {
         .reduce((sum, t) => sum + Number(t.amount), 0);
 
     const totalBalance = totalIncome - totalExpense;
+
+    if (loading) {
+        return <div className="flex justify-center items-center h-screen"><span className="loading loading-spinner text-primary"></span></div>;
+    }
 
     return (
         <div className="my-10 px-4">

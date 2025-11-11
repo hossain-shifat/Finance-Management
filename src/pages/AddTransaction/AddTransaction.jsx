@@ -41,7 +41,9 @@ const AddTransaction = () => {
         fetch('http://localhost:3000/add-transaction', {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${user.accessToken}`
+
             },
             body: JSON.stringify(newTransaction)
         })
@@ -50,6 +52,7 @@ const AddTransaction = () => {
                 console.log(data)
                 if (data.insertedId) {
                     e.target.reset()
+                    setType('')
                     setCategory('')
                     toast.success('Transaction Added')
                 }
@@ -58,7 +61,7 @@ const AddTransaction = () => {
 
     return (
         <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}>
-            <div className="flex justify-center items-center min-h-screen text-[#333] bg-base-200 dark:bg-base-100 my-10 select-none">
+            <div className="flex justify-center items-center min-h-screen text-base-content bg-base-200 dark:bg-base-100 my-10 select-none">
                 <div className="mx-4">
                     <div className="w-full max-w-[450px] p-7 border border-gray-100 rounded-xl shadow-sm bg-base-100 dark:bg-base-300 dark:border-base-200 text-base-content">
                         <h1 className="text-2xl font-bold text-center mb-5">Add Transaction</h1>
@@ -82,7 +85,8 @@ const AddTransaction = () => {
                                 <div>
                                     <input
                                         type="text"
-                                        className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200"
+                                        className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200"
+                                        required
                                         placeholder={
                                             type
                                                 ? "Select or type category"
@@ -102,12 +106,12 @@ const AddTransaction = () => {
                                 </div>
                             </div>
                             <div>
-                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" type="tel" placeholder="Amount" pattern="[0-9]*" name="amount" />
-                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" readOnly defaultValue={user.email} type="email" name='email' placeholder='Email' />
-                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" readOnly defaultValue={user.displayName} type="text" name='name' placeholder='Name' />
+                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" type="tel" required placeholder="Amount" pattern="[0-9]*" name="amount" />
+                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" readOnly defaultValue={user.email} type="email" name='email' placeholder='Email' />
+                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" readOnly defaultValue={user.displayName} type="text" name='name' placeholder='Name' />
                             </div>
                             <div>
-                                <textarea cols="20" rows="4" className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" placeholder='Description' name='description'></textarea>
+                                <textarea cols="20" rows="4" className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] my-2 placeholder:text-base-content text-base-content dark:border-base-200" required placeholder='Description' name='description'></textarea>
                             </div>
                             <div className="w-full">
                                 <button className="btn btn-primary w-full my-4">Add Transaction</button>

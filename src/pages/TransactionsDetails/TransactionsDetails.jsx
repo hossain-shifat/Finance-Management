@@ -1,13 +1,41 @@
 import { BadgeCheck, X } from 'lucide-react'
 import { motion } from 'motion/react'
-import React from 'react'
-import { Link, useLoaderData } from 'react-router'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router'
 import card from '../../assets/card.png'
+import { AuthContext } from '../../context/AuthContext'
 
 
 const TransactionsDetails = () => {
-    const transaction = useLoaderData()
-    console.log(transaction)
+
+    const { id } = useParams()
+    const { user,loading } = useContext(AuthContext)
+    const [transaction, setTransaction] = useState(null)
+
+    useEffect(() => {
+        if (!user) {
+            return
+        }
+        fetch(`http://localhost:3000/my-transaction/${id}`,{
+            headers:{
+                authorization: `Bearer ${user.accessToken}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                setTransaction(data)
+                console.log(data)
+
+            })
+    }, [id,user])
+
+    if (loading) {
+        return <div className="flex justify-center items-center h-screen"><span className="loading loading-spinner text-primary"></span></div>;
+    }
+    if (!transaction) {
+        return
+    }
+
     return (
         <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}>
             <div className="flex justify-center items-center min-h-screen bg-base-200 dark:bg-base-100 -mt-5">
@@ -15,7 +43,7 @@ const TransactionsDetails = () => {
                     <div className="w-full max-w-[750px] p-7 border border-gray-100 rounded-xl shadow-xl bg-base-100 dark:border-base-200 dark:bg-base-200 text-base-content">
                         <div className="flex justify-between ">
                             <h1 className="font-bold text-xl">Transaction Details</h1>
-                            <Link><X /></Link>
+                            <Link to='/my-transaction'><X /></Link>
                         </div>
                         <div className="flex justify-between items-center gap-10 py-5 border-b border-base-100">
                             <div className="flex justify-between items-center gap-2">
@@ -28,7 +56,7 @@ const TransactionsDetails = () => {
                                 </div>
                             </div>
                             <div>
-                                <p className="flex gap-1"><span>{transaction.date}</span>, <span>{transaction.time}</span></p>
+                                <p className="flex gap-1"><span>{transaction.date},</span> <span>{transaction.time}</span></p>
                             </div>
                         </div>
                         <div className="flex justify-between items-center py-5 ">
@@ -37,7 +65,7 @@ const TransactionsDetails = () => {
                                 <p className='pl-4 text-base-content'>{transaction.type === 'income' ? `${transaction.category}` : `For ${transaction.category}`}</p>
                             </div>
                             <div>
-                                <p className="flex gap-2 items-center px-2 rounded-full bg-green-400 text-white "><BadgeCheck size={16}/> Complete</p>
+                                <p className="flex gap-2 items-center px-2 rounded-full bg-green-400 text-white "><BadgeCheck size={16} /> Complete</p>
                             </div>
                         </div>
                         <div className="p-4 border bg-base-300 border-base-200 shadow-xl rounded-xl">

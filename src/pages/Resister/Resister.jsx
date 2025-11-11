@@ -83,16 +83,16 @@ const Resister = () => {
 
     return (
         <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}>
-            <div className="flex justify-center items-center min-h-screen text-[#333] bg-base-200 dark:bg-base-100 -mt-5 select-none">
+            <div className="flex justify-center items-center min-h-screen text-base-content bg-base-200 dark:bg-base-100 -mt-5 select-none">
                 <div className="mx-4">
                     <div className="w-full max-w-[450px] p-7 border border-gray-100 rounded-xl shadow-sm bg-base-100 dark:bg-base-300 dark:border-base-200 text-base-content">
                         <form onSubmit={handleSingUp}>
                             <h1 className="text-2xl font-bold text-center mb-5">Sing Up</h1>
-                            <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" type="text" name='name' placeholder='Name' />
-                            <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" type="text" name='photo' placeholder='Photo URL' />
-                            <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" type="email" name='email' placeholder='Email' />
+                            <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" type="text" name='name' placeholder='Name' />
+                            <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" type="text" name='photo' placeholder='Photo URL' />
+                            <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" type="email" name='email' placeholder='Email' />
                             <div className="relative w-full">
-                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-[#333] my-2 placeholder:text-base-content dark:border-base-200" type={showPassword ? 'text' : 'password'} onChange={handlePasswordOnChange} name='password' value={password} placeholder='Password' />
+                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" type={showPassword ? 'text' : 'password'} onChange={handlePasswordOnChange} name='password' value={password} placeholder='Password' />
                                 <span onClick={() => setShowPassword(!showPassword)} className="absolute cursor-pointer top-5 right-5">{showPassword ? <EyeClosed /> : <Eye />}</span>
                             </div>
                             {passwordError &&
