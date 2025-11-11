@@ -54,9 +54,6 @@ const TransactionsDetails = () => {
                                 <p>{transaction.category}</p>
                             </div>
                         </div>
-                        <div className="p-4 border bg-base-300 border-base-200 shadow-xl rounded-xl">
-
-                        </div>
                     </div>
                 </div>
             </div>
