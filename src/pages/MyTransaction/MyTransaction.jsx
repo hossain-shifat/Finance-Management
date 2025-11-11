@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { toast } from 'react-toastify'
 import { testValueType } from 'motion'
+import Swal from 'sweetalert2'
 
 const MyTransaction = () => {
 
@@ -21,7 +22,6 @@ const MyTransaction = () => {
             fetch(`http://localhost:3000/my-transaction?email=${user.email}`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data)
                     setTransactions(data)
                 })
         }
@@ -65,6 +65,36 @@ const MyTransaction = () => {
             })
     }
 
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:3000/my-transaction/${id}`, {
+                    method: "DELETE"
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                            const remainingTransaction = transactions.filter(transaction => transaction._id !== id)
+                            setTransactions(remainingTransaction)
+                        }
+                    })
+            }
+        });
+    }
+
     return (
         <div className="px-4 my-10">
             <h1 className="my-10 font-bold text-2xl">My Transaction</h1>
@@ -89,14 +119,14 @@ const MyTransaction = () => {
                                     <td>{index + 1}</td>
                                     <td>{transaction.type}</td>
                                     <td>{transaction.category}</td>
-                                    <td className={`${transaction.type === 'income' ? 'text-green-500' : 'text-red-500'}`}>{transaction.type === 'income' ? `+ $${transaction.amount}` : `- $${transaction.amount}`}</td>
+                                    <td className={`${transaction.type === 'income' ? 'text-green-500' : 'text-red-500'}`}>{transaction.type === 'income' ? `+$${transaction.amount}` : `-$${transaction.amount}`}</td>
                                     <td>{transaction.date}</td>
                                     <td>{transaction._id}</td>
                                     <td>
                                         <div className="flex gap-2">
-                                            <button onClick={() => { setSelectedId(transaction._id); updateRef.current.showModal(); }} className="btn btn-outline btn-warning">Update</button>
-                                            <button className="btn btn-outline btn-error">Delete</button>
-                                            <button className="btn btn-outline btn-info">View</button>
+                                            <button onClick={() => { setSelectedId(transaction._id); updateRef.current.showModal(); }} className="btn btn-outline btn-warning hover:bg-transparent">Update</button>
+                                            <button onClick={() => handleDelete(transaction._id)} className="btn btn-outline btn-error hover:bg-transparent">Delete</button>
+                                            <button className="btn btn-outline btn-info hover:bg-transparent">View</button>
                                         </div>
                                     </td>
                                 </tr>
