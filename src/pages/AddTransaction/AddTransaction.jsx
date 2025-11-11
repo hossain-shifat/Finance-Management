@@ -12,8 +12,7 @@ const AddTransaction = () => {
 
     const categories = {
         income: ["Salary", "Freelance", "Business", "Investments", "Other Income"],
-        expense: ["Food", "Transport", "Shopping", "Bills", "Health", "Entertainment", "Other Expense",
-        ],
+        expense: ["Food", "Transport", "Shopping", "Bills", "Health", "Entertainment", "Other Expense",],
     };
 
     const handleSubmit = (e) => {
