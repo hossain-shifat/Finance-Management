@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { motion } from 'motion/react'
 import masterCardLogo from '../../assets/mastercard_icon.png'
-import { ArrowRight, TrendingDown, TrendingUp } from 'lucide-react'
+import { TrendingDown, TrendingUp } from 'lucide-react'
 import { Link } from 'react-router'
 
 const Overview = () => {
@@ -80,7 +80,7 @@ const Overview = () => {
                                     <p>All Income Types</p>
                                 </div>
                                 <div className="flex justify-between h-31 border border-blue-900 shadow-xl my-5 rounded-xl bg-blue-900 p-4">
-                                    <div className="space-y-2 *:text-[#FFFFFF]">
+                                    <div className="flex flex-col justify-between *:text-[#FFFFFF]">
                                         <p>This Month Income</p>
                                         <h1 className="font-bold text-xl">${totalIncome}</h1>
                                     </div>
@@ -104,7 +104,7 @@ const Overview = () => {
                                     <p>All Expense Types</p>
                                 </div>
                                 <div className="flex justify-between h-31 border border-base-100 bg-base-300 shadow-xl my-5 rounded-xl p-4">
-                                    <div className="space-y-2 text-base-content">
+                                    <div className="flex flex-col justify-between text-base-content">
                                         <p>This Month Expense</p>
                                         <h1 className="font-bold text-xl">${totalExpense}</h1>
                                     </div>
