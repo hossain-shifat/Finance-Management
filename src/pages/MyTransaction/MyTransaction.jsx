@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { toast } from 'react-toastify'
-import { testValueType } from 'motion'
 import Swal from 'sweetalert2'
+import { Link } from 'react-router'
 
 const MyTransaction = () => {
 
@@ -132,7 +132,7 @@ const MyTransaction = () => {
                                         <div className="flex gap-2">
                                             <button onClick={() => { setSelectedId(transaction._id); updateRef.current.showModal(); }} className="btn btn-outline btn-warning hover:bg-transparent">Update</button>
                                             <button onClick={() => handleDelete(transaction._id)} className="btn btn-outline btn-error hover:bg-transparent">Delete</button>
-                                            <button className="btn btn-outline btn-info hover:bg-transparent">View</button>
+                                            <Link to={`/transactions-details/${transaction._id}`} className="btn btn-outline btn-info hover:bg-transparent">View</Link>
                                         </div>
                                     </td>
                                 </tr>

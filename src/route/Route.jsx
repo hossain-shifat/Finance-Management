@@ -9,6 +9,7 @@ import Resister from '../pages/Resister/Resister'
 import PrivateRoute from '../components/PriveteRoute/PrivateRoute'
 import MyProfile from '../pages/MyProfile/MyProfile'
 import UpdateProfile from '../pages/UpdateProfile/UpdateProfile'
+import TransactionsDetails from '../pages/TransactionsDetails/TransactionsDetails'
 
 
 
@@ -24,31 +25,36 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/add-transaction',
-                element: <PrivateRoute><AddTransaction/></PrivateRoute>
+                element: <PrivateRoute><AddTransaction /></PrivateRoute>
             },
             {
                 path: '/my-transaction',
-                element: <PrivateRoute><MyTransaction/></PrivateRoute>
+                element: <PrivateRoute><MyTransaction /></PrivateRoute>
             },
             {
                 path: '/reports',
-                element: <PrivateRoute><Reports/></PrivateRoute>
+                element: <PrivateRoute><Reports /></PrivateRoute>
             },
             {
-                path:'/login',
+                path: '/login',
                 Component: Login
             },
             {
-                path:'/resister',
+                path: '/resister',
                 Component: Resister
             },
             {
-                path:'/my-profile',
-                element: <PrivateRoute><MyProfile/></PrivateRoute>
+                path: '/my-profile',
+                element: <PrivateRoute><MyProfile /></PrivateRoute>
             },
             {
-                path:'/update-profile',
-                element: <PrivateRoute><UpdateProfile/></PrivateRoute>
+                path: '/update-profile',
+                element: <PrivateRoute><UpdateProfile /></PrivateRoute>
+            },
+            {
+                path: '/transactions-details/:id',
+                loader: ({ params }) => fetch(`http://localhost:3000/my-transaction/${params.id}`),
+                element: <PrivateRoute><TransactionsDetails /></PrivateRoute>
             },
         ]
     }
