@@ -17,6 +17,10 @@ const MyTransaction = () => {
         expense: ["Food", "Transport", "Shopping", "Bills", "Health", "Entertainment", "Other Expense",],
     };
 
+    const styles = getComputedStyle(document.documentElement);
+    const bgColor = styles.getPropertyValue("--color-base-100").trim();
+    const textColor = styles.getPropertyValue("--color-base-content").trim();
+
     useEffect(() => {
         if (user?.email) {
             fetch(`http://localhost:3000/my-transaction?email=${user.email}`)
@@ -73,7 +77,9 @@ const MyTransaction = () => {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes, delete it!",
+            background: bgColor,
+            color: textColor
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch(`http://localhost:3000/my-transaction/${id}`, {
@@ -117,7 +123,7 @@ const MyTransaction = () => {
                             transactions.map((transaction, index) =>
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td>{transaction.type}</td>
+                                    <td className="capitalize">{transaction.type}</td>
                                     <td>{transaction.category}</td>
                                     <td className={`${transaction.type === 'income' ? 'text-green-500' : 'text-red-500'}`}>{transaction.type === 'income' ? `+$${transaction.amount}` : `-$${transaction.amount}`}</td>
                                     <td>{transaction.date}</td>
