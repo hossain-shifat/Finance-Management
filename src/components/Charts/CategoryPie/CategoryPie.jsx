@@ -7,7 +7,7 @@ const CategoryPie = () => {
     const { user, loading } = useContext(AuthContext)
     const [pieData, setPieData] = useState([])
 
-    const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A45EE5", "#FF6666", "#33CCFF"];
+    const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A45EE5", "#FF6666", "#33CCFF","#FF8C00", "#9C27B0", "#4CAF50", "#E91E63", "#795548", "#03A9F4"];
 
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const CategoryPie = () => {
     }, [user])
 
     return (
-        <div className="border bg-base-200 border-base-100 shadow-xl rounded-xl my-10 p-4">
+        <div className="border bg-base-200 border-base-100 shadow-xl rounded-xl p-4">
             <h1 className="font-bold pl-4">Category-wise Summary</h1>
             {pieData.length > 0 ? (
                 <ResponsiveContainer width='100%' height='400'>
