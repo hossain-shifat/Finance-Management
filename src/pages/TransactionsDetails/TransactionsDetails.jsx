@@ -9,15 +9,17 @@ import { AuthContext } from '../../context/AuthContext'
 const TransactionsDetails = () => {
 
     const { id } = useParams()
-    const { user,loading } = useContext(AuthContext)
+    const { user, loading } = useContext(AuthContext)
     const [transaction, setTransaction] = useState(null)
+    const [categoryTotal, SetCategoryTotal] = useState(0)
 
     useEffect(() => {
         if (!user) {
             return
         }
-        fetch(`http://localhost:3000/my-transaction/${id}`,{
-            headers:{
+
+        fetch(`http://localhost:3000/my-transaction/${id}`, {
+            headers: {
                 authorization: `Bearer ${user.accessToken}`
             }
         })
@@ -26,8 +28,23 @@ const TransactionsDetails = () => {
                 setTransaction(data)
                 console.log(data)
 
+                fetch(`http://localhost:3000/my-transaction?email=${user.email}`, {
+                    headers: {
+                        authorization: `Bearer ${user.accessToken}`
+                    }
+                })
+                    .then(res => res.json())
+                    .then(categoryData => {
+                        const sameCategory = categoryData.filter(cate => cate.category === data.category && cate.type === data.type)
+                        const categorySum = sameCategory.reduce((sum, item) => sum + parseFloat(item.amount), 0)
+                        SetCategoryTotal(categorySum)
+                    })
+
             })
-    }, [id,user])
+
+
+
+    }, [id, user])
 
     if (loading) {
         return <div className="flex justify-center items-center h-screen"><span className="loading loading-spinner text-primary"></span></div>;
@@ -77,9 +94,17 @@ const TransactionsDetails = () => {
                                 <h1 className="text-sm text-base-content/50">Description</h1>
                                 <p>{transaction.description}</p>
                             </div>
-                            <div className="py-2">
+                            <div className="border-b border-base-100 py-2">
                                 <h1 className="text-sm text-base-content/50">Type</h1>
+                                <p>{transaction.type}</p>
+                            </div>
+                            <div className="border-b border-base-100 py-2">
+                                <h1 className="text-sm text-base-content/50">Category</h1>
                                 <p>{transaction.category}</p>
+                            </div>
+                            <div className="flex justify-between items-center py-4">
+                                <h1 className="text-lg font-bold text-base-content">Total of category:</h1>
+                                <p className="text-lg font-bold text-base-content px-2">${categoryTotal}</p>
                             </div>
                         </div>
                     </div>

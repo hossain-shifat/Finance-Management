@@ -63,7 +63,7 @@ const AddTransaction = () => {
         <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}>
             <div className="flex justify-center items-center min-h-screen text-base-content bg-base-200 dark:bg-base-100 my-10 select-none">
                 <div className="mx-4">
-                    <div className="w-full max-w-[450px] p-7 border border-gray-100 rounded-xl shadow-sm bg-base-100 dark:bg-base-300 dark:border-base-200 text-base-content">
+                    <div className="w-full max-w-[550px] p-7 border border-gray-100 rounded-xl shadow-sm bg-base-100 dark:bg-base-300 dark:border-base-200 text-base-content">
                         <h1 className="text-2xl font-bold text-center mb-5">Add Transaction</h1>
                         <form onSubmit={handleSubmit}>
                             <div className="space-y-3">

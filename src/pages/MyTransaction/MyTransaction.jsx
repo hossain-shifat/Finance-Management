@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
+import { BookOpen, FilePenLine, Trash2 } from 'lucide-react'
 
 const MyTransaction = () => {
 
@@ -12,6 +13,8 @@ const MyTransaction = () => {
     const [category, setCategory] = useState('');
     const [selectedId, setSelectedId] = useState('')
     const updateRef = useRef(null)
+    const navigate = useNavigate()
+
     const categories = {
         income: ["Salary", "Freelance", "Business", "Investments", "Other Income"],
         expense: ["Food", "Transport", "Shopping", "Bills", "Health", "Entertainment", "Other Expense",],
@@ -69,6 +72,8 @@ const MyTransaction = () => {
                     e.target.reset()
                     setType('')
                     setCategory('')
+                    navigate(`/transactions-details/${selectedId}`)
+
                 }
                 setTransactions(prev => prev.map(transaction => transaction._id === selectedId ? { ...transaction, ...updateTransaction } : transaction))
             })
@@ -147,9 +152,9 @@ const MyTransaction = () => {
                                     <td>{transaction._id}</td>
                                     <td>
                                         <div className="flex gap-2">
-                                            <button onClick={() => { setSelectedId(transaction._id); updateRef.current.showModal(); }} className="btn btn-outline btn-warning hover:bg-transparent">Update</button>
-                                            <button onClick={() => handleDelete(transaction._id)} className="btn btn-outline btn-error hover:bg-transparent">Delete</button>
-                                            <Link to={`/transactions-details/${transaction._id}`} className="btn btn-outline btn-info hover:bg-transparent">View</Link>
+                                            <button onClick={() => { setSelectedId(transaction._id); updateRef.current.showModal(); }} className="btn btn-outline btn-warning hover:bg-transparent hover:text-yellow-400"><FilePenLine size={16}/> Update</button>
+                                            <button onClick={() => handleDelete(transaction._id)} className="btn btn-outline btn-error hover:bg-transparent hover:text-red-400"><Trash2 size={16}/> Delete</button>
+                                            <Link to={`/transactions-details/${transaction._id}`} className="btn btn-outline btn-info hover:bg-transparent hover:text-blue-400"><BookOpen size={16}/> View</Link>
                                         </div>
                                     </td>
                                 </tr>
@@ -164,7 +169,7 @@ const MyTransaction = () => {
                 <dialog ref={updateRef} id="my_modal_5" className="modal modal-bottom sm:modal-middle">
                     {/* <div className="flex justify-center items-center min-h-screen text-base-content bg-base-200 dark:bg-base-100 select-none"> */}
                     <div className="mx-4">
-                        <div className="w-full max-w-[450px] p-7 border border-gray-100 rounded-xl shadow-sm bg-base-100 dark:bg-base-300 dark:border-base-200 text-base-content">
+                        <div className="w-full max-w-[550px] p-7 border border-gray-100 rounded-xl shadow-sm bg-base-100 dark:bg-base-300 dark:border-base-200 text-base-content">
                             <h1 className="text-2xl font-bold text-center mb-5">Update</h1>
                             <form onSubmit={handleUpdate}>
                                 <div className="space-y-3">
@@ -214,7 +219,7 @@ const MyTransaction = () => {
                                 </div>
                                 <div className=" flex gap-4 justify-end">
                                     <button onClick={() => updateRef.current.close()} type='button' className="btn btn-outline my-4">Close</button>
-                                    <button className="btn btn-primary  my-4">Update</button>
+                                    <button className="btn btn-primary  my-4"><FilePenLine size={16}/> Update</button>
                                 </div>
                             </form>
                         </div>
