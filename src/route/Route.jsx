@@ -10,6 +10,7 @@ import PrivateRoute from '../components/PriveteRoute/PrivateRoute'
 import MyProfile from '../pages/MyProfile/MyProfile'
 import UpdateProfile from '../pages/UpdateProfile/UpdateProfile'
 import TransactionsDetails from '../pages/TransactionsDetails/TransactionsDetails'
+import ErrorPage from '../components/ErrorPage/ErrorPage'
 
 
 
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
     {
         path: '/',
         Component: Root,
+        errorElement: <ErrorPage/>,
         children: [
             {
                 path: '/',

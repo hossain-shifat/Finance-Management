@@ -163,7 +163,7 @@ const MyTransaction = () => {
                                         <div className="flex gap-2">
                                             <button onClick={() => handleOpenModal(transaction)} className="btn btn-outline btn-warning hover:bg-transparent hover:text-yellow-400"><FilePenLine size={16} /> Update</button>
                                             <button onClick={() => handleDelete(transaction._id)} className="btn btn-outline btn-error hover:bg-transparent hover:text-red-400"><Trash2 size={16} /> Delete</button>
-                                            <Link to={`/transactions-details/${transaction._id}`} className="btn btn-outline btn-info hover:bg-transparent hover:text-blue-400"><BookOpen size={16} /> View</Link>
+                                            <Link to={`/transactions-details/${transaction._id}`} className="btn btn-outline btn-info hover:bg-transparent hover:text-blue-400"><BookOpen size={16} /> Details</Link>
                                         </div>
                                     </td>
                                 </tr>
