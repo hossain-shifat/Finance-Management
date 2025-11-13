@@ -43,8 +43,8 @@ const UpdateProfile = () => {
                             <div>
                                 <h1 className="text-2xl font-bold text-center mb-5">Update Profile</h1>
                             </div>
-                            <input onChange={(e) => setName(e.target.value)} className="w-full p-3 rounded bg-[#eee] border border-gray-100 outline-none text-[1rem] text-base-content my-2" type="text" name='name' value={name} placeholder='Name' />
-                            <input onChange={(e) => setPhoto(e.target.value)} className="w-full p-3 rounded bg-[#eee] border border-gray-100 outline-none text-[1rem] text-base-content my-2" type="text" name='photo' value={photo} placeholder='Photo URL' />
+                            <input onChange={(e) => setName(e.target.value)} className="w-full p-3 rounded bg-base-200 border border-base-100 outline-none text-[1rem] text-base-content my-2" type="text" name='name' value={name} placeholder='Name' />
+                            <input onChange={(e) => setPhoto(e.target.value)} className="w-full p-3 rounded bg-base-200 border border-base-100 outline-none text-[1rem] text-base-content my-2" type="text" name='photo' value={photo} placeholder='Photo URL' />
                             <button className="btn btn-primary font-bold text-white w-full mt-5 border-none outline-none">Confirm</button>
                         </form>
                     </div>
