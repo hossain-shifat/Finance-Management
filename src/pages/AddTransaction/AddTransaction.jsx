@@ -38,7 +38,7 @@ const AddTransaction = () => {
             user_name: userName
         }
 
-        fetch('http://localhost:3000/add-transaction', {
+        fetch('https://fin-ease-api-server-vert.vercel.app/add-transaction', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -49,7 +49,6 @@ const AddTransaction = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if (data.insertedId) {
                     e.target.reset()
                     setType('')

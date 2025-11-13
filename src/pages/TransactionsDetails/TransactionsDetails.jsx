@@ -18,7 +18,7 @@ const TransactionsDetails = () => {
             return
         }
 
-        fetch(`http://localhost:3000/my-transaction/${id}`, {
+        fetch(`https://fin-ease-api-server-vert.vercel.app/my-transaction/${id}`, {
             headers: {
                 authorization: `Bearer ${user.accessToken}`
             }
@@ -27,7 +27,7 @@ const TransactionsDetails = () => {
             .then(data => {
                 setTransaction(data)
 
-                fetch(`http://localhost:3000/my-transaction?email=${user.email}`, {
+                fetch(`https://fin-ease-api-server-vert.vercel.app/my-transaction?email=${user.email}`, {
                     headers: {
                         authorization: `Bearer ${user.accessToken}`
                     }
@@ -72,7 +72,7 @@ const TransactionsDetails = () => {
                                 </div>
                             </div>
                             <div>
-                                <p className="flex gap-1"><span>{transaction.date},</span> <span>{transaction.time}</span></p>
+                                <p className="flex flex-col md:flex-row gap-1"><span>{transaction.date},</span> <span>{transaction.time}</span></p>
                             </div>
                         </div>
                         <div className="flex justify-between items-center py-5 ">
@@ -84,20 +84,20 @@ const TransactionsDetails = () => {
                                 <p className="flex gap-2 items-center px-2 rounded-full bg-green-400 text-white "><BadgeCheck size={16} /> Complete</p>
                             </div>
                         </div>
-                        <div className="p-4 border bg-base-300 border-base-200 shadow-xl rounded-xl">
-                            <div className="border-b border-base-100 py-2">
+                        <div className="p-4 border bg-base-300 border-base-200 shadow-lg rounded-xl">
+                            <div className="border-b border-base-200 py-2">
                                 <h1 className="text-sm text-base-content/50">Transaction ID:</h1>
                                 <p>{transaction._id}</p>
                             </div>
-                            <div className="border-b border-base-100 py-2">
+                            <div className="border-b border-base-200 py-2">
                                 <h1 className="text-sm text-base-content/50">Description</h1>
                                 <p>{transaction.description}</p>
                             </div>
-                            <div className="border-b border-base-100 py-2">
+                            <div className="border-b border-base-200 py-2">
                                 <h1 className="text-sm text-base-content/50">Type</h1>
                                 <p>{transaction.type}</p>
                             </div>
-                            <div className="border-b border-base-100 py-2">
+                            <div className="border-b border-base-200 py-2">
                                 <h1 className="text-sm text-base-content/50">Category</h1>
                                 <p>{transaction.category}</p>
                             </div>

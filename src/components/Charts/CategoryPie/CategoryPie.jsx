@@ -7,7 +7,7 @@ const CategoryPie = () => {
     const { user, loading } = useContext(AuthContext)
     const [pieData, setPieData] = useState([])
 
-    const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A45EE5", "#FF6666", "#33CCFF","#FF8C00", "#9C27B0", "#4CAF50", "#E91E63", "#795548", "#03A9F4"];
+    const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A45EE5", "#FF6666", "#33CCFF", "#FF8C00", "#9C27B0", "#4CAF50", "#E91E63", "#795548", "#03A9F4"];
 
 
     useEffect(() => {
@@ -15,22 +15,22 @@ const CategoryPie = () => {
             return
         }
 
-        fetch(`http://localhost:3000/my-transaction?email=${user.email}`, {
+        fetch(`https://fin-ease-api-server-vert.vercel.app/my-transaction?email=${user.email}`, {
             headers: {
                 authorization: `Bearer ${user.accessToken}`
             }
         })
             .then(res => res.json())
             .then(data => {
-                const category = data.reduce((acc,item)=>{
+                const category = data.reduce((acc, item) => {
                     const existing = acc.find(itm => itm.name === item.category)
                     if (existing) {
                         existing.value += Number(item.amount)
-                    }else{
-                        acc.push({name:item.category,value:Number(item.amount)})
+                    } else {
+                        acc.push({ name: item.category, value: Number(item.amount) })
                     }
                     return acc
-                },[])
+                }, [])
                 setPieData(category)
             })
     }, [user])
@@ -61,9 +61,9 @@ const CategoryPie = () => {
             )
                 :
                 (
-                <div className="flex justify-center items-center h-[400px] text-center">
-                    <p>No Category Data Available</p>
-                </div>)
+                    <div className="flex justify-center items-center h-[400px] text-center">
+                        <p>No Category Data Available</p>
+                    </div>)
 
             }
 

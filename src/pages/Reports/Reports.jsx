@@ -7,11 +7,11 @@ const Reports = () => {
     return (
         <div>
             <div className="py-10">
-                <h1 className="text-2xl font-bold">Expence Comparison</h1>
+                <h1 className="text-2xl font-bold pl-4">Expence Comparison</h1>
             </div>
-            <div className="flex flex-col lg:flex-row justify-between *:w-full gap-2">
-                <CategoryPie />
+            <div className="*:my-5 mx-4">
                 <MonthlyTotalsChart />
+                <CategoryPie />
             </div>
         </div>
     )

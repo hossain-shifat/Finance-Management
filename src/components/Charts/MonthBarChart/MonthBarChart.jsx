@@ -25,7 +25,7 @@ const MonthBarChart = () => {
             return
         }
 
-        fetch(`http://localhost:3000/my-transaction?email=${user.email}`, {
+        fetch(`https://fin-ease-api-server-vert.vercel.app/my-transaction?email=${user.email}`, {
             headers: {
                 authorization: `Bearer ${user.accessToken}`
             }
@@ -66,8 +66,6 @@ const MonthBarChart = () => {
             })
     }, [user])
 
-
-    console.log(barData)
     return (
         <div className="border bg-base-200 border-base-100 shadow-xl rounded-xl p-4">
             <div>
@@ -81,10 +79,10 @@ const MonthBarChart = () => {
                         {/* <XAxis dataKey='month_name' tickFormatter={monthTickFormatter} axisLine={false} tickLine={false} interval={0} tick={renderQuarterTick} height={1} scale='band' xAxisId="quarter" /> */}
                         <YAxis width="auto" tickFormatter={(value) => {
                             if (value >= 1000000) {
-                                return "$"+(value / 1000000) + 'M'
+                                return "$" + (value / 1000000) + 'M'
                             }
                             if (value >= 1000) {
-                                return "$"+(value / 1000) + 'K'
+                                return "$" + (value / 1000) + 'K'
                             }
                             return value
                         }} />
@@ -94,6 +92,7 @@ const MonthBarChart = () => {
                         <Legend wrapperStyle={{ paddingTop: '1em' }} />
                         <Bar dataKey='this_month_income' fill='#8884d8' barSize={15} name='Current Month Income' />
                         <Bar dataKey='this_month_expense' fill='#82ca9d' barSize={15} name='Current Month Expense' />
+                        <Bar dataKey='total' fill='#0088FE' barSize={15} name='Current Month Total' />
                         {
                             barData.some(d => d.prev_month_income > 0) && (
                                 <Bar dataKey='prev_month_income' fill='#FF8C00' barSize={15} name='Previous Month Income' />

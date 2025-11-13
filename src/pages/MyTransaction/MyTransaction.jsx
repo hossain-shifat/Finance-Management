@@ -27,7 +27,7 @@ const MyTransaction = () => {
 
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:3000/my-transaction?email=${user.email}`, {
+            fetch(`https://fin-ease-api-server-vert.vercel.app/my-transaction?email=${user.email}`, {
                 headers: {
                     authorization: `Bearer ${user.accessToken}`
                 }
@@ -65,7 +65,7 @@ const MyTransaction = () => {
             time: time,
         }
 
-        fetch(`http://localhost:3000/my-transaction/${selectedId}`, {
+        fetch(`https://fin-ease-api-server-vert.vercel.app/my-transaction/${selectedId}`, {
             method: "PATCH",
             headers: {
                 'content-type': 'application/json',
@@ -105,7 +105,7 @@ const MyTransaction = () => {
             color: textColor
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:3000/my-transaction/${id}`, {
+                fetch(`https://fin-ease-api-server-vert.vercel.app/my-transaction/${id}`, {
                     method: "DELETE",
                     headers: {
                         authorization: `Bearer ${user.accessToken}`
@@ -128,6 +128,8 @@ const MyTransaction = () => {
             }
         });
     }
+
+
 
     return (
         <div className="px-4 my-10">

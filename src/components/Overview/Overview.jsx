@@ -7,19 +7,18 @@ import { Link } from 'react-router'
 
 const Overview = () => {
 
-    const { user,loading } = useContext(AuthContext)
+    const { user, loading } = useContext(AuthContext)
     const [overview, setOverview] = useState([])
 
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:3000/overview?email=${user.email}`,{
+            fetch(`https://fin-ease-api-server-vert.vercel.app/overview?email=${user.email}`, {
                 headers: {
                     authorization: `Bearer ${user.accessToken}`
                 }
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data)
                     setOverview(data)
                 })
         }
@@ -94,7 +93,7 @@ const Overview = () => {
                                     </div>
                                     <div className="flex flex-col justify-between">
                                         <div>
-                                            <TrendingUp stroke='white'/>
+                                            <TrendingUp stroke='white' />
                                         </div>
                                     </div>
                                 </div>
