@@ -176,66 +176,67 @@ const MyTransaction = () => {
                 {/* <button className="btn" onClick={() => document.getElementById('my_modal_5').showModal()}>open modal</button> */}
 
                 <dialog ref={updateRef} id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                    {/* <div className="flex justify-center items-center min-h-screen text-base-content bg-base-200 dark:bg-base-100 select-none"> */}
-                    <div className="mx-4">
-                        <div className="w-full max-w-[550px] p-7 border border-gray-100 rounded-xl shadow-sm bg-base-100 dark:bg-base-300 dark:border-base-200 text-base-content">
-                            <h1 className="text-2xl font-bold text-center mb-5">Update</h1>
-                            <form onSubmit={handleUpdate}>
-                                <div className="space-y-3">
-                                    <div className="space-y-2 bg-base-200 w-full p-3 py-4 rounded-sm">
-                                        <div>
-                                            <h1 className="font-bold">Type:</h1>
-                                        </div>
-                                        <div className="w-full flex gap-4">
-                                            <label className="flex items-center gap-2 cursor-pointer">
-                                                <input type="radio" name="type" value="income" checked={type === "income"} onChange={(e) => { setType(e.target.value); setCategory('') }} className="radio radio-primary" />
-                                                <span>Income</span>
-                                            </label>
-                                            <label className="flex items-center gap-2 cursor-pointer">
-                                                <input type="radio" name="type" value="expense" checked={type === "expense"} onChange={(e) => { setType(e.target.value); setCategory('') }} className="radio radio-primary" />
-                                                <span>Expense</span>
-                                            </label>
-                                        </div>
+                    <div className="modal-box">
+                        <h3 className="font-bold text-xl text-center py-5">Update</h3>
+                        <form onSubmit={handleUpdate}>
+                            <div className="space-y-3">
+                                <div className="space-y-2 bg-base-200 w-full p-3 py-4 rounded-sm">
+                                    <div>
+                                        <h1 className="font-bold">Type:</h1>
                                     </div>
-                                    <div className="w-full">
-                                        <input
-                                            type="text"
-                                            className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200"
-                                            required
-                                            placeholder={
-                                                type
-                                                    ? "Select or type category"
-                                                    : "Select Type First (Income/Expense)"
-                                            }
-                                            list="categoryList"
-                                            value={category}
-                                            onChange={(e) => setCategory(e.target.value)}
-                                            onFocus={(e)=> e.target.value = ''}
-                                            onBlur={(e) => e.target.value = category}
-                                            disabled={!type} />
+                                    <div className="w-full flex gap-4">
+                                        <label className="flex items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="type" value="income" checked={type === "income"} onChange={(e) => { setType(e.target.value); setCategory('') }} className="radio radio-primary" />
+                                            <span>Income</span>
+                                        </label>
+                                        <label className="flex items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="type" value="expense" checked={type === "expense"} onChange={(e) => { setType(e.target.value); setCategory('') }} className="radio radio-primary" />
+                                            <span>Expense</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="w-full">
+                                    <input
+                                        type="text"
+                                        className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200"
+                                        required
+                                        placeholder={
+                                            type
+                                                ? "Select or type category"
+                                                : "Select Type First (Income/Expense)"
+                                        }
+                                        list="categoryList"
+                                        value={category}
+                                        onChange={(e) => setCategory(e.target.value)}
+                                        onFocus={(e) => e.target.value = ''}
+                                        onBlur={(e) => e.target.value = category}
+                                        disabled={!type} />
 
-                                        <datalist id="categoryList">
-                                            {type &&
-                                                categories[type]?.map((cate, index) => (
-                                                    <option key={index} value={cate} />
-                                                ))}
-                                        </datalist>
-                                    </div>
+                                    <datalist id="categoryList">
+                                        {type &&
+                                            categories[type]?.map((cate, index) => (
+                                                <option key={index} value={cate} />
+                                            ))}
+                                    </datalist>
                                 </div>
-                                <div>
-                                    <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" type="tel" required placeholder="Amount" defaultValue={selectedTransaction?.amount || ''} pattern="[0-9]*" name="amount" />
-                                </div>
-                                <div>
-                                    <textarea cols="20" rows="4" className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" required placeholder='Description' defaultValue={selectedTransaction?.description || ''} name='description'></textarea>
-                                </div>
-                                <div className=" flex gap-4 justify-end">
-                                    <button onClick={() => updateRef.current.close()} type='button' className="btn btn-outline my-4">Close</button>
-                                    <button className="btn btn-primary  my-4"><FilePenLine size={16} /> Update</button>
-                                </div>
+                            </div>
+                            <div>
+                                <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" type="tel" required placeholder="Amount" defaultValue={selectedTransaction?.amount || ''} pattern="[0-9]*" name="amount" />
+                            </div>
+                            <div>
+                                <textarea cols="20" rows="4" className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" required placeholder='Description' defaultValue={selectedTransaction?.description || ''} name='description'></textarea>
+                            </div>
+                            <div className=" flex gap-4 justify-end">
+                                <button onClick={() => updateRef.current.close()} type='button' className="btn btn-outline my-4">Close</button>
+                                <button className="btn btn-primary  my-4"><FilePenLine size={16} /> Update</button>
+                            </div>
+                        </form>
+                        {/* <div className="modal-action">
+                            <form method="dialog">
+                                <button className="btn">Close</button>
                             </form>
-                        </div>
+                        </div> */}
                     </div>
-                    {/* </div> */}
                 </dialog>
             </div>
 
