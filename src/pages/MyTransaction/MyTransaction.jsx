@@ -15,6 +15,8 @@ const MyTransaction = () => {
     const [selectedId, setSelectedId] = useState('')
     const updateRef = useRef(null)
     const navigate = useNavigate()
+    const [sortBy, setSortBy] = useState('');
+    const [sortOrder, setSortOrder] = useState('asc');
 
     const categories = {
         income: ["Salary", "Freelance", "Business", "Investments", "Other Income"],
@@ -24,6 +26,26 @@ const MyTransaction = () => {
     const styles = getComputedStyle(document.documentElement);
     const bgColor = styles.getPropertyValue("--color-base-100").trim();
     const textColor = styles.getPropertyValue("--color-base-content").trim();
+
+
+    const handleSort = (field) => {
+        const order = sortBy === field && sortOrder === 'asc' ? 'desc' : 'asc'
+        setSortBy(field)
+        setSortOrder(order)
+
+        const sorted = [...transactions].sort((a, b) => {
+            if (field === 'amount') {
+                return order === 'asc' ? a.amount - b.amount : b.amount - a.amount
+            } else if (field === 'date') {
+                const dateA = new Date(`${a.date} ${a.time}`)
+                const dateB = new Date(`${b.date} ${b.time}`)
+                return order === 'asc' ? dateA - dateB : dateB - dateA
+            }
+            return 0
+        })
+        setTransactions(sorted)
+    }
+
 
     useEffect(() => {
         if (user?.email) {
@@ -132,9 +154,20 @@ const MyTransaction = () => {
 
 
     return (
-        <div className="px-4 my-10">
-            <div>
-                <h1 className="my-10 font-bold text-2xl">My Transaction</h1>
+        <div className="px-4">
+            <div className="flex justify-between items-center">
+                <div>
+                    <h1 className="my-10 font-bold text-2xl">My Transaction</h1>
+                </div>
+                <div className="flex justify-end">
+                    <div className="dropdown dropdown-start">
+                        <div tabIndex={0} role="button" className="btn btn-outline  m-1">Sort By: {sortBy ? `${sortBy.charAt(0).toUpperCase() + sortBy.slice(1)} ${sortOrder === 'asc' ? '↑' : '↓'}` : ''}</div>
+                        <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow-sm">
+                            <li><a onClick={() => handleSort('date')}>Date {sortBy === 'date' ? (sortOrder === 'asc' ? '' : '') : ''}</a></li>
+                            <li><a onClick={() => handleSort('amount')}>Amount {sortBy === 'amount' ? (sortOrder === 'asc' ? '' : '') : ''}</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div className="overflow-x-auto">
                 <table className="table w-auto mx-auto">
