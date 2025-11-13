@@ -9,6 +9,7 @@ const MyTransaction = () => {
 
     const { user, loading } = useContext(AuthContext)
     const [transactions, setTransactions] = useState([])
+    const [selectedTransaction, setSelectedTransaction] = useState(null)
     const [type, setType] = useState('')
     const [category, setCategory] = useState('');
     const [selectedId, setSelectedId] = useState('')
@@ -37,6 +38,14 @@ const MyTransaction = () => {
                 })
         }
     }, [user])
+
+    const handleOpenModal = (transaction) => {
+        setSelectedId(transaction._id)
+        setSelectedTransaction(transaction)
+        setType(transaction.type)
+        setCategory(transaction.category)
+        updateRef.current.showModal()
+    }
 
     const handleUpdate = (e) => {
         e.preventDefault()
@@ -152,9 +161,9 @@ const MyTransaction = () => {
                                     <td>{transaction._id}</td>
                                     <td>
                                         <div className="flex gap-2">
-                                            <button onClick={() => { setSelectedId(transaction._id); updateRef.current.showModal(); }} className="btn btn-outline btn-warning hover:bg-transparent hover:text-yellow-400"><FilePenLine size={16}/> Update</button>
-                                            <button onClick={() => handleDelete(transaction._id)} className="btn btn-outline btn-error hover:bg-transparent hover:text-red-400"><Trash2 size={16}/> Delete</button>
-                                            <Link to={`/transactions-details/${transaction._id}`} className="btn btn-outline btn-info hover:bg-transparent hover:text-blue-400"><BookOpen size={16}/> View</Link>
+                                            <button onClick={() => handleOpenModal(transaction)} className="btn btn-outline btn-warning hover:bg-transparent hover:text-yellow-400"><FilePenLine size={16} /> Update</button>
+                                            <button onClick={() => handleDelete(transaction._id)} className="btn btn-outline btn-error hover:bg-transparent hover:text-red-400"><Trash2 size={16} /> Delete</button>
+                                            <Link to={`/transactions-details/${transaction._id}`} className="btn btn-outline btn-info hover:bg-transparent hover:text-blue-400"><BookOpen size={16} /> View</Link>
                                         </div>
                                     </td>
                                 </tr>
@@ -201,25 +210,27 @@ const MyTransaction = () => {
                                             list="categoryList"
                                             value={category}
                                             onChange={(e) => setCategory(e.target.value)}
+                                            onFocus={(e)=> e.target.value = ''}
+                                            onBlur={(e) => e.target.value = category}
                                             disabled={!type} />
 
                                         <datalist id="categoryList">
                                             {type &&
-                                                categories[type]?.map((category, index) => (
-                                                    <option key={index} value={category} />
+                                                categories[type]?.map((cate, index) => (
+                                                    <option key={index} value={cate} />
                                                 ))}
                                         </datalist>
                                     </div>
                                 </div>
                                 <div>
-                                    <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" type="tel" required placeholder="Amount" pattern="[0-9]*" name="amount" />
+                                    <input className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" type="tel" required placeholder="Amount" defaultValue={selectedTransaction?.amount || ''} pattern="[0-9]*" name="amount" />
                                 </div>
                                 <div>
-                                    <textarea cols="20" rows="4" className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" required placeholder='Description' name='description'></textarea>
+                                    <textarea cols="20" rows="4" className="w-full p-3 rounded bg-base-200 border border-gray-100 outline-none text-[1rem] text-base-content my-2 placeholder:text-base-content dark:border-base-200" required placeholder='Description' defaultValue={selectedTransaction?.description || ''} name='description'></textarea>
                                 </div>
                                 <div className=" flex gap-4 justify-end">
                                     <button onClick={() => updateRef.current.close()} type='button' className="btn btn-outline my-4">Close</button>
-                                    <button className="btn btn-primary  my-4"><FilePenLine size={16}/> Update</button>
+                                    <button className="btn btn-primary  my-4"><FilePenLine size={16} /> Update</button>
                                 </div>
                             </form>
                         </div>

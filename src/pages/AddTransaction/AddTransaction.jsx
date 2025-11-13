@@ -95,12 +95,14 @@ const AddTransaction = () => {
                                         list="categoryList"
                                         value={category}
                                         onChange={(e) => setCategory(e.target.value)}
+                                        onFocus={(e) => e.target.value = ''}
+                                        onBlur={(e) => e.target.value = category}
                                         disabled={!type} />
 
                                     <datalist id="categoryList">
                                         {type &&
-                                            categories[type]?.map((category, index) => (
-                                                <option key={index} value={category} />
+                                            categories[type]?.map((cate, index) => (
+                                                <option key={index} value={cate} />
                                             ))}
                                     </datalist>
                                 </div>

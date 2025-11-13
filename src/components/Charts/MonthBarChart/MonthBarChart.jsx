@@ -81,10 +81,10 @@ const MonthBarChart = () => {
                         {/* <XAxis dataKey='month_name' tickFormatter={monthTickFormatter} axisLine={false} tickLine={false} interval={0} tick={renderQuarterTick} height={1} scale='band' xAxisId="quarter" /> */}
                         <YAxis width="auto" tickFormatter={(value) => {
                             if (value >= 1000000) {
-                                return (value / 1000000) + 'M'
+                                return "$"+(value / 1000000) + 'M'
                             }
                             if (value >= 1000) {
-                                return (value / 1000) + 'K'
+                                return "$"+(value / 1000) + 'K'
                             }
                             return value
                         }} />
